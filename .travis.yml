@@ -1,24 +1,26 @@
-language:
-  haskell
-
 matrix:
   allow_failures:
-    - env: GHCVER=head
+    - env: CABALVER=head GHCVER=head
 
 env:
- - GHCVER=7.6.3
- - GHCVER=7.8.4
- - GHCVER=7.10.1
- - GHCVER=head
+ - CABALVER=1.18 GHCVER=7.6.3
+ - CABALVER=1.20 GHCVER=7.8.3
+ - CABALVER=1.22 GHCVER=7.10.1
+ - CABALVER=head GHCVER=head
+
+before_install:
+ - sudo add-apt-repository -y ppa:hvr/ghc
+ - sudo apt-get update
+ - sudo apt-get install cabal-install-$CABALVER ghc-$GHCVER
+ - export PATH=/opt/ghc/$GHCVER/bin:$PATH
+
+install:
+ - cabal-$CABALVER update
 
 script:
- - travis_retry cabal install --enable-tests --only-dependencies
- - cabal install --run-tests
+ - travis_retry cabal-$CABALVER install -j2 --enable-tests --only-dependencies
+ - cabal-$CABALVER install -j1 --enable-tests
+ - cabal-$CABALVER test
 
 notifications:
-  email:
-    on_success: never
-    on_failure: change
-  irc:
-    channels:
-      - "irc.freenode.net#yi"
+  irc: "chat.freenode.net#yi"
