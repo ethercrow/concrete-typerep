@@ -1,0 +1,24 @@
+language:
+  haskell
+
+matrix:
+  allow_failures:
+    - env: GHCVER=head
+
+env:
+ - GHCVER=7.6.3
+ - GHCVER=7.8.4
+ - GHCVER=7.10.1
+ - GHCVER=head
+
+script:
+ - travis_retry cabal install --enable-tests --only-dependencies
+ - cabal install --run-tests
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+  irc:
+    channels:
+      - "irc.freenode.net#yi"

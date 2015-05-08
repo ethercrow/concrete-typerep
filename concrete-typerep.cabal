@@ -1,0 +1,29 @@
+Name:                concrete-typerep
+Version:             0.1.0.2
+Synopsis:            Binary and Hashable instances for TypeRep
+Description:         Binary and Hashable instances for TypeRep
+License:             BSD3
+License-file:        LICENSE
+Author:              Reiner Pope
+Maintainer:          reiner.pope@gmail.com
+Category:            Data
+Build-type:          Simple
+Cabal-version:       >=1.9.2
+
+Library
+  Exposed-modules:     Data.ConcreteTypeRep
+  Build-depends:       base >= 4.4 && < 5, binary, hashable < 1.3
+
+Test-Suite tests
+  type: exitcode-stdio-1.0
+  Main-is: Main.hs
+  hs-source-dirs: tests
+  build-depends:
+      base,
+      binary,
+      concrete-typerep,
+      hashable,
+      test-framework,
+      test-framework-quickcheck2,
+      QuickCheck >= 2.4
+
